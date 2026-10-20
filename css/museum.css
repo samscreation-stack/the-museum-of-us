@@ -1,0 +1,1534 @@
+/* ==========================================================
+   S A M A E  —  THE MUSEUM
+   Phase 4A: editorial welcome + private memory gallery
+   Page-only stylesheet. Backend and access logic are untouched.
+   ========================================================== */
+
+:root {
+  --museum-paper: #f8f5ef;
+  --museum-white: #fffdf9;
+  --museum-ink: #292622;
+  --museum-muted: #777168;
+  --museum-wine: #713744;
+  --museum-wine-dark: #512631;
+  --museum-olive: #65694a;
+  --museum-gold: #b9a16f;
+  --museum-line: #e5ded3;
+  --museum-serif: "Cormorant Garamond", Georgia, serif;
+  --museum-sans: "DM Sans", Arial, sans-serif;
+}
+
+body {
+  background: var(--museum-paper);
+  color: var(--museum-ink);
+  font-family: var(--museum-sans);
+}
+
+body::before {
+  background:
+    radial-gradient(ellipse at 86% 13%, rgba(185, 161, 111, .10), transparent 32rem),
+    radial-gradient(ellipse at 4% 60%, rgba(113, 55, 68, .035), transparent 34rem);
+}
+
+.page-shell {
+  width: min(100% - 32px, 1320px);
+}
+
+.museum-site-header {
+  min-height: 82px;
+  padding: 15px 0;
+  border-bottom-color: var(--museum-line);
+}
+
+.museum-site-brand {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.museum-site-brand__logo {
+  display: block;
+  width: auto;
+  max-width: min(205px, 47vw);
+  height: 43px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.museum-header-actions {
+  gap: 12px;
+}
+
+.museum-header-actions .signed-in-label {
+  max-width: 145px;
+  color: var(--museum-muted);
+  font-size: 11px;
+}
+
+.museum-header-actions .portal-sign-out {
+  padding: 10px 13px;
+  border-color: #d9cec3;
+  border-radius: 2px;
+  color: var(--museum-wine);
+  font-family: var(--museum-sans);
+  font-size: 10px;
+  letter-spacing: .02em;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.museum-header-actions .portal-sign-out:hover {
+  border-color: var(--museum-wine);
+  background: rgba(113, 55, 68, .045);
+}
+
+.portal-main {
+  max-width: none;
+  padding: 22px 0 54px;
+}
+
+.museum-welcome {
+  --welcome-paper: #f5f2e9;
+  --welcome-ink: #292a24;
+  --welcome-muted: #767568;
+  --welcome-line: #dedbce;
+  --welcome-olive: #656a47;
+
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  margin: 0 auto 68px;
+  padding: 0 clamp(20px, 5vw, 72px);
+  overflow: hidden;
+  border: 1px solid #e3dfd3;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, .30), transparent 48%),
+    var(--welcome-paper);
+  color: var(--welcome-ink);
+}
+
+.museum-welcome *,
+.museum-welcome *::before,
+.museum-welcome *::after {
+  box-sizing: border-box;
+}
+
+.museum-welcome__masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 57px;
+  border-bottom: 1px solid var(--welcome-line);
+}
+
+.museum-welcome__private {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--welcome-muted);
+  font-size: .61rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+
+.museum-welcome__private-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--welcome-olive);
+}
+
+.museum-welcome__edition {
+  color: #999486;
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .11em;
+  text-align: right;
+}
+
+.museum-welcome__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  max-width: 1190px;
+  margin: 0 auto;
+  padding: clamp(34px, 8vw, 66px) 0 32px;
+}
+
+.museum-welcome__copy {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+}
+
+.museum-welcome__eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 23px;
+  color: var(--welcome-olive);
+  font-size: .62rem;
+  font-weight: 700;
+  line-height: 1.8;
+  letter-spacing: .14em;
+}
+
+.museum-welcome__eyebrow span {
+  color: #b8ad92;
+}
+
+.museum-welcome__copy h1 {
+  max-width: 720px;
+  margin: 0;
+  color: var(--welcome-ink);
+  font-family: var(--museum-serif);
+  font-size: clamp(3.3rem, 11vw, 7.3rem);
+  font-weight: 400;
+  line-height: .91;
+  letter-spacing: -.065em;
+}
+
+.museum-welcome__copy h1 em {
+  color: var(--welcome-olive);
+  font-weight: 400;
+}
+
+.museum-welcome__description {
+  max-width: 420px;
+  margin: 25px 0 0;
+  color: #6f6e62;
+  font-size: .91rem;
+  line-height: 1.95;
+}
+
+.museum-welcome__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 26px;
+  margin-top: 27px;
+  padding: 0 0 9px;
+  border-bottom: 1px solid var(--welcome-olive);
+  color: var(--welcome-ink);
+  font-size: .82rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: color .2s ease, border-color .2s ease;
+}
+
+.museum-welcome__link svg {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+  transition: transform .2s ease;
+}
+
+.museum-welcome__link:hover {
+  color: var(--welcome-olive);
+}
+
+.museum-welcome__link:hover svg {
+  transform: translateX(4px);
+}
+
+.museum-welcome__link:focus-visible,
+.museum-welcome__brand:focus-visible {
+  outline: 2px solid var(--welcome-olive);
+  outline-offset: 5px;
+}
+
+.museum-welcome__footnote {
+  margin: 38px 0 0;
+  color: #999586;
+  font-size: .57rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  line-height: 1.8;
+}
+
+.museum-welcome__artwork {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 350px);
+  min-height: 290px;
+  margin: 0 auto;
+}
+
+.museum-welcome__artwork-inner {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 310px);
+  aspect-ratio: .91;
+  overflow: hidden;
+  border-radius: 48% 48% 2px 2px;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(255, 255, 255, .52), transparent 65%),
+    #e9e7d9;
+}
+
+.museum-welcome__sunflower {
+  display: block;
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+  transform: rotate(-5deg);
+  animation: museum-flower-arrive .8s ease-out both;
+}
+
+.museum-welcome__artwork-index {
+  position: absolute;
+  z-index: 1;
+  top: 19px;
+  left: 19px;
+  color: #777962;
+  font-size: .57rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.museum-welcome__artwork-note {
+  position: absolute;
+  right: 12px;
+  bottom: 16px;
+  max-width: 118px;
+  color: var(--welcome-ink);
+  font-family: var(--museum-serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.13;
+  text-align: right;
+}
+
+.museum-welcome__orbit {
+  position: absolute;
+  z-index: -1;
+  display: block;
+  border: 1px solid #d8d5c6;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.museum-welcome__orbit--one {
+  top: 3%;
+  left: 3%;
+  width: 94%;
+  aspect-ratio: 1;
+}
+
+.museum-welcome__orbit--two {
+  top: -4%;
+  left: -3.5%;
+  width: 107%;
+  aspect-ratio: 1;
+  border-color: #e7e2d5;
+}
+
+.museum-welcome__bottomline {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 0;
+  border-top: 1px solid var(--welcome-line);
+  color: #8d8b7e;
+  font-size: .56rem;
+  font-weight: 700;
+  letter-spacing: .095em;
+  line-height: 1.8;
+}
+
+.museum-welcome__bottomline span:last-child {
+  text-align: right;
+}
+
+/* Memory archive */
+.museum-gallery {
+  width: 100%;
+  max-width: 1190px;
+  margin: 0 auto 76px;
+  padding: 0 clamp(2px, 1.8vw, 20px);
+  box-sizing: border-box;
+}
+
+.museum-gallery__heading {
+  max-width: 720px;
+  margin-bottom: 28px;
+}
+
+.museum-gallery__eyebrow {
+  margin: 0 0 12px;
+  color: var(--museum-wine);
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+}
+
+.museum-gallery__heading h2 {
+  margin: 0;
+  color: var(--museum-ink);
+  font-family: var(--museum-serif);
+  font-size: clamp(2.5rem, 7vw, 4.4rem);
+  font-weight: 400;
+  line-height: .98;
+  letter-spacing: -.045em;
+}
+
+.museum-gallery__intro {
+  margin: 14px 0 0;
+  color: var(--museum-muted);
+  font-size: .9rem;
+  line-height: 1.8;
+}
+
+.museum-collection-nav {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  width: 100%;
+  margin: 25px 0 27px;
+  padding: 3px 2px 10px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.museum-collection-nav button {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 10px 15px;
+  border: 1px solid #ded5ca;
+  border-radius: 2px;
+  background: transparent;
+  color: var(--museum-ink);
+  font-family: var(--museum-sans);
+  font-size: .76rem;
+  cursor: pointer;
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+
+.museum-collection-nav button[aria-pressed="true"] {
+  border-color: var(--museum-wine);
+  background: var(--museum-wine);
+  color: #fffaf5;
+}
+
+.museum-collection-nav button:focus-visible {
+  outline: 2px solid var(--museum-wine);
+  outline-offset: 3px;
+}
+
+.museum-collection-nav button:disabled {
+  opacity: .48;
+  cursor: not-allowed;
+}
+
+.museum-memory-status {
+  min-height: 1.6em;
+  margin: 17px 0 20px;
+  color: var(--museum-muted);
+  font-size: .82rem;
+  line-height: 1.7;
+}
+
+.museum-memory-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+}
+
+.museum-memory-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--museum-line);
+  border-radius: 2px;
+  background: var(--museum-white);
+  transition: border-color .22s ease, transform .22s ease;
+}
+
+.museum-memory-card__media {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  overflow: hidden;
+  background: #eee9df;
+}
+
+.museum-memory-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+
+.museum-memory-card__placeholder {
+  padding: 24px;
+  color: var(--museum-muted);
+  font-family: var(--museum-serif);
+  font-size: 1.35rem;
+  text-align: center;
+}
+
+.museum-memory-card__content {
+  padding: 20px 21px 23px;
+}
+
+.museum-memory-card__collection {
+  margin: 0 0 10px;
+  color: var(--museum-wine);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.museum-memory-card__title {
+  margin: 0;
+  color: var(--museum-ink);
+  font-family: var(--museum-serif);
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+}
+
+.museum-memory-card__date {
+  margin: 10px 0 0;
+  color: #8b8278;
+  font-size: .72rem;
+  letter-spacing: .025em;
+}
+
+.museum-memory-card__caption {
+  margin: 15px 0 0;
+  color: var(--museum-ink);
+  font-size: .89rem;
+  font-weight: 600;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.museum-memory-card__body {
+  margin: 10px 0 0;
+  color: var(--museum-muted);
+  font-size: .85rem;
+  line-height: 1.85;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.museum-site-footer {
+  margin-top: 0;
+  border-top-color: var(--museum-line);
+  color: #8f867d;
+  font-size: .61rem;
+  letter-spacing: .12em;
+}
+
+.museum-site-footer .footer-right span {
+  color: var(--museum-wine);
+}
+
+.page-notice {
+  border-color: #ded2bf;
+  background: #f4ecdf;
+  color: #684a39;
+}
+
+.access-message {
+  border-color: var(--museum-line);
+  border-radius: 2px;
+  background: var(--museum-white);
+}
+
+@keyframes museum-flower-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(8px) rotate(-8deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(-5deg);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .museum-memory-card:hover {
+    border-color: #cfc3b5;
+    transform: translateY(-3px);
+  }
+
+  .museum-memory-card:hover .museum-memory-card__image {
+    transform: scale(1.025);
+  }
+}
+
+@media (min-width: 640px) {
+  .page-shell {
+    width: calc(100% - 56px);
+  }
+
+  .museum-memory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  .museum-gallery {
+    margin-bottom: 90px;
+  }
+}
+
+@media (min-width: 760px) {
+  .museum-site-header {
+    min-height: 94px;
+  }
+
+  .museum-site-brand__logo {
+    height: 49px;
+  }
+
+  .museum-welcome__masthead {
+    min-height: 65px;
+  }
+
+  .museum-welcome__layout {
+    grid-template-columns: minmax(0, 1.18fr) minmax(260px, .82fr);
+    gap: clamp(20px, 3.5vw, 54px);
+    padding-top: clamp(48px, 6vw, 82px);
+    padding-bottom: clamp(40px, 5vw, 64px);
+  }
+
+  .museum-welcome__artwork {
+    width: 100%;
+    max-width: 390px;
+    min-height: 370px;
+  }
+
+  .museum-welcome__artwork-inner {
+    width: min(100%, 340px);
+  }
+
+  .museum-welcome__footnote {
+    margin-top: 48px;
+  }
+}
+
+@media (min-width: 960px) {
+  .museum-memory-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .museum-welcome__layout {
+    padding-top: 78px;
+    padding-bottom: 64px;
+  }
+
+  .museum-welcome__artwork {
+    max-width: 420px;
+  }
+
+  .museum-welcome__artwork-inner {
+    width: 360px;
+  }
+}
+
+@media (max-width: 420px) {
+  .page-shell {
+    width: calc(100% - 24px);
+  }
+
+  .museum-site-brand__logo {
+    max-width: 43vw;
+    height: 36px;
+  }
+
+  .museum-header-actions {
+    gap: 7px;
+  }
+
+  .museum-header-actions .signed-in-label {
+    display: none;
+  }
+
+  .museum-header-actions .portal-sign-out {
+    padding: 9px 10px;
+    font-size: 9px;
+  }
+
+  .museum-welcome {
+    padding-inline: 16px;
+  }
+
+  .museum-welcome__private {
+    font-size: .53rem;
+    letter-spacing: .09em;
+  }
+
+  .museum-welcome__edition {
+    font-size: .5rem;
+    letter-spacing: .04em;
+  }
+
+  .museum-welcome__copy h1 {
+    font-size: clamp(2.8rem, 12vw, 3.4rem);
+  }
+
+  .museum-welcome__bottomline {
+    font-size: .48rem;
+    letter-spacing: .04em;
+  }
+
+  .museum-gallery__heading h2 {
+    font-size: clamp(2.25rem, 10vw, 3rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .museum-welcome__sunflower {
+    animation: none;
+  }
+
+  .museum-welcome__link,
+  .museum-welcome__link svg,
+  .museum-collection-nav button,
+  .museum-memory-card,
+  .museum-memory-card__image {
+    transition: none;
+  }
+}
+
+/* ==========================================
+   PHASE 4B.1 — MEMORY DETAIL OVERLAY
+========================================== */
+
+.museum-memory-card[role="button"] {
+  cursor: pointer;
+}
+
+.museum-memory-card[role="button"]:focus-visible {
+  outline: 2px solid var(--wine, #722f3d);
+  outline-offset: 4px;
+}
+
+.museum-memory-card[role="button"]:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.museum-memory-dialog {
+  width: min(900px, calc(100% - 28px));
+  max-width: 900px;
+  max-height: min(88dvh, 900px);
+  padding: 0;
+  overflow: visible;
+  border: 1px solid rgba(67, 45, 43, 0.16);
+  border-radius: 4px;
+  background: #fbf7f0;
+  color: var(--ink, #30252a);
+  box-shadow: 0 24px 90px rgba(27, 18, 20, 0.24);
+}
+
+.museum-memory-dialog[open] {
+  animation: museum-dialog-arrive 180ms ease-out both;
+}
+
+.museum-memory-dialog::backdrop {
+  background: rgba(28, 21, 23, 0.62);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.museum-memory-dialog__panel {
+  position: relative;
+  max-height: min(88dvh, 900px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: #c7b7a8 transparent;
+}
+
+.museum-memory-dialog__close {
+  position: sticky;
+  z-index: 2;
+  top: 12px;
+  display: grid;
+  place-items: center;
+  float: right;
+  width: 42px;
+  height: 42px;
+  margin: 12px 12px -54px 0;
+  border: 1px solid rgba(67, 45, 43, 0.18);
+  border-radius: 50%;
+  background: rgba(251, 247, 240, 0.94);
+  color: var(--ink, #30252a);
+  font: 300 29px/1 "DM Sans", sans-serif;
+  cursor: pointer;
+}
+
+.museum-memory-dialog__close:hover {
+  background: #fffdf9;
+  border-color: rgba(67, 45, 43, 0.42);
+}
+
+.museum-memory-dialog__close:focus-visible {
+  outline: 2px solid var(--wine, #722f3d);
+  outline-offset: 3px;
+}
+
+.museum-memory-dialog__content {
+  padding: clamp(24px, 5vw, 56px);
+}
+
+.museum-memory-dialog__collection {
+  margin: 0 52px 12px 0;
+  color: var(--wine, #722f3d);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.museum-memory-dialog__title {
+  max-width: 720px;
+  margin: 0 0 8px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  overflow-wrap: anywhere;
+}
+
+.museum-memory-dialog__date {
+  margin: 0 0 26px;
+  color: var(--ink-soft, #76686c);
+  font-size: 0.78rem;
+  letter-spacing: 0.025em;
+}
+
+.museum-memory-dialog__media {
+  margin: 26px 0;
+  background: #eee5da;
+}
+
+.museum-memory-dialog__media img {
+  display: block;
+  width: 100%;
+  max-height: 62dvh;
+  object-fit: contain;
+  background: #eee5da;
+}
+
+.museum-memory-dialog__image-error {
+  display: block;
+  padding: 30px 18px;
+  color: var(--ink-soft, #76686c);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.museum-memory-dialog__caption {
+  max-width: 680px;
+  margin: 24px 0 0;
+  color: var(--wine, #722f3d);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  font-weight: 500;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.museum-memory-dialog__body {
+  max-width: 680px;
+  margin-top: 22px;
+  color: var(--ink, #30252a);
+  font-size: 0.98rem;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+body.museum-dialog-open {
+  overflow: hidden;
+}
+
+@keyframes museum-dialog-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 560px) {
+  .museum-memory-dialog {
+    width: calc(100% - 18px);
+    max-height: 90dvh;
+    border-radius: 3px;
+  }
+
+  .museum-memory-dialog__panel {
+    max-height: 90dvh;
+  }
+
+  .museum-memory-dialog__content {
+    padding: 25px 19px 30px;
+  }
+
+  .museum-memory-dialog__close {
+    top: 8px;
+    width: 38px;
+    height: 38px;
+    margin: 8px 8px -46px 0;
+  }
+
+  .museum-memory-dialog__date {
+    margin-bottom: 20px;
+  }
+
+  .museum-memory-dialog__media {
+    margin: 20px 0;
+  }
+
+  .museum-memory-dialog__media img {
+    max-height: 48dvh;
+  }
+
+  .museum-memory-dialog__body {
+    font-size: 0.93rem;
+    line-height: 1.85;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .museum-memory-dialog[open] {
+    animation: none;
+  }
+}
+
+/* ==========================================
+   PHASE 4B.2 — COLLECTION IDENTITIES
+========================================== */
+
+/* Memory Gallery: let photographs take the lead. */
+#museum-memory-grid[data-collection="gallery"] {
+  gap: 2rem;
+}
+
+#museum-memory-grid[data-collection="gallery"] .museum-memory-card__media {
+  overflow: hidden;
+}
+
+#museum-memory-grid[data-collection="gallery"] .museum-memory-card__image {
+  transition: transform 500ms ease;
+}
+
+@media (hover: hover) {
+  #museum-memory-grid[data-collection="gallery"] .museum-memory-card:hover .museum-memory-card__image {
+    transform: scale(1.035);
+  }
+}
+
+/* Our Story: emphasize dates and chronological reading. */
+#museum-memory-grid[data-collection="timeline"] .museum-memory-card__date {
+  letter-spacing: 0.06em;
+}
+
+/* Letters Archive: prioritize comfortable reading. */
+#museum-memory-grid[data-collection="letters"] .museum-memory-card__content {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+#museum-memory-grid[data-collection="letters"] .museum-memory-card__title {
+  line-height: 1.3;
+}
+
+#museum-memory-grid[data-collection="letters"] .museum-memory-card__body {
+  line-height: 1.85;
+}
+
+/* Hidden Exhibition: create a subtle, distinct atmosphere. */
+#museum-memory-grid[data-collection="hidden"] .museum-memory-card__collection {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Respect reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  #museum-memory-grid[data-collection="gallery"] .museum-memory-card__image {
+    transition: none;
+  }
+}
+
+/* ==========================================
+   PHASE 4B.2 — OUR STORY TIMELINE
+========================================== */
+
+#museum-memory-grid[data-collection="timeline"] {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  padding-left: 26px;
+  background:
+    linear-gradient(var(--museum-gold),
+      var(--museum-gold)) 8px 0 / 1px 100% no-repeat;
+}
+
+/* Each memory becomes a timeline entry. */
+#museum-memory-grid[data-collection="timeline"] .museum-memory-card {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  overflow: visible;
+}
+
+/* Timeline marker. */
+#museum-memory-grid[data-collection="timeline"] .museum-memory-card::before {
+  content: "";
+  position: absolute;
+  top: 27px;
+  left: -24px;
+  z-index: 2;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--museum-paper);
+  border-radius: 50%;
+  background: var(--museum-wine);
+  box-shadow: 0 0 0 1px var(--museum-gold);
+}
+
+/* Keep the photograph neatly clipped. */
+#museum-memory-grid[data-collection="timeline"] .museum-memory-card__media {
+  overflow: hidden;
+}
+
+/* Give timeline dates more emphasis. */
+#museum-memory-grid[data-collection="timeline"] .museum-memory-card__date {
+  margin-top: 0;
+  margin-bottom: 13px;
+  color: var(--museum-olive);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+/* Wider, more spacious storytelling entries on desktop. */
+@media (min-width: 700px) {
+  #museum-memory-grid[data-collection="timeline"] .museum-memory-card {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: stretch;
+  }
+
+  #museum-memory-grid[data-collection="timeline"] .museum-memory-card__media {
+    min-height: 240px;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  #museum-memory-grid[data-collection="timeline"] .museum-memory-card__content {
+    align-self: center;
+    padding: 26px;
+  }
+
+  #museum-memory-grid[data-collection="timeline"] .museum-memory-card--letter .museum-memory-card__content,
+  #museum-memory-grid[data-collection="timeline"] .museum-memory-card--note .museum-memory-card__content {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Keep the timeline accessible for reduced-motion users. */
+@media (prefers-reduced-motion: reduce) {
+  #museum-memory-grid[data-collection="timeline"] .museum-memory-card {
+    transition: none;
+  }
+}
+
+/* ==========================================
+   PHASE 4B.2 — LETTERS ARCHIVE
+========================================== */
+
+#museum-memory-grid[data-collection="letters"] {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 22px;
+}
+
+/* Each letter resembles a carefully preserved note. */
+#museum-memory-grid[data-collection="letters"] .museum-memory-card {
+  position: relative;
+  max-width: 760px;
+  width: 100%;
+  margin-inline: auto;
+  border-radius: 3px;
+  border-top: 1px solid var(--museum-gold);
+  background:
+    linear-gradient(to bottom,
+      transparent 0,
+      transparent 35px,
+      rgba(150, 120, 90, 0.08) 36px,
+      transparent 37px);
+  box-shadow: 0 8px 28px rgba(40, 30, 20, 0.045);
+}
+
+/* Give the letter text comfortable spacing. */
+#museum-memory-grid[data-collection="letters"] .museum-memory-card__content {
+  padding: 28px 24px 32px;
+}
+
+/* Elegant title styling. */
+#museum-memory-grid[data-collection="letters"] .museum-memory-card__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* Keep the letter readable, with generous line spacing. */
+#museum-memory-grid[data-collection="letters"] .museum-memory-card__body {
+  line-height: 1.9;
+  white-space: pre-line;
+}
+
+/* Slightly more compact on smaller screens. */
+@media (max-width: 480px) {
+  #museum-memory-grid[data-collection="letters"] .museum-memory-card__content {
+    padding: 22px 18px 26px;
+  }
+}
+
+/* ==========================================
+   PHASE 4B.2 — ALL MEMORIES EXHIBITION
+========================================== */
+
+/* Give the mixed exhibition a little more breathing room. */
+#museum-memory-grid[data-collection="all"] {
+  align-items: start;
+  gap: 28px;
+}
+
+/* Shared card foundation for the mixed exhibition. */
+#museum-memory-grid[data-collection="all"] .museum-memory-card {
+  align-self: start;
+  min-width: 0;
+  transition:
+    transform 250ms ease,
+    box-shadow 250ms ease,
+    border-color 250ms ease;
+}
+
+/* Photo memories: refined, quiet presentation. */
+#museum-memory-grid[data-collection="all"] .museum-memory-card[data-collection="gallery"] .museum-memory-card__media {
+  overflow: hidden;
+}
+
+#museum-memory-grid[data-collection="all"] .museum-memory-card[data-collection="gallery"] .museum-memory-card__image {
+  transition: transform 450ms ease;
+}
+
+/* Story memories: emphasize the date. */
+#museum-memory-grid[data-collection="all"] .museum-memory-card[data-collection="timeline"] .museum-memory-card__date {
+  color: var(--museum-olive);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+/* Letters: make them feel like preserved correspondence. */
+#museum-memory-grid[data-collection="all"] .museum-memory-card[data-collection="letters"] {
+  border-top: 2px solid var(--museum-gold);
+  background-color: rgba(255, 255, 255, 0.45);
+}
+
+#museum-memory-grid[data-collection="all"] .museum-memory-card[data-collection="letters"] .museum-memory-card__content {
+  padding-top: 24px;
+  padding-bottom: 26px;
+}
+
+#museum-memory-grid[data-collection="all"] .museum-memory-card[data-collection="letters"] .museum-memory-card__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+}
+
+/* Hidden memories: subtle, archival label treatment. */
+#museum-memory-grid[data-collection="all"] .museum-memory-card[data-collection="hidden"] .museum-memory-card__collection {
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Gentle hover: keep the experience calm, not flashy. */
+@media (hover: hover) {
+  #museum-memory-grid[data-collection="all"] .museum-memory-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(40, 30, 20, 0.07);
+  }
+
+  #museum-memory-grid[data-collection="all"] .museum-memory-card[data-collection="gallery"]:hover .museum-memory-card__image {
+    transform: scale(1.025);
+  }
+}
+
+/* Respect reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+
+  #museum-memory-grid[data-collection="all"] .museum-memory-card,
+  #museum-memory-grid[data-collection="all"] .museum-memory-card__image {
+    transition: none;
+  }
+
+  #museum-memory-grid[data-collection="all"] .museum-memory-card:hover {
+    transform: none;
+  }
+}
+
+/* ==========================================
+   PHASE 4B.2 — EDITORIAL EXHIBITION GRID
+========================================== */
+
+/* Mobile remains simple and easy to browse. */
+#museum-memory-grid[data-collection="all"] {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+}
+
+/* Editorial arrangement on wider screens. */
+@media (min-width: 700px) {
+  #museum-memory-grid[data-collection="all"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+  }
+
+}
+
+/* Larger screens: a calm three-column exhibition. */
+@media (min-width: 1050px) {
+  #museum-memory-grid[data-collection="all"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px 26px;
+  }
+
+}
+
+/* ==========================================
+   PHASE 4B.2 — FEATURED MEMORY
+========================================== */
+
+/* Featured memories get a more prominent frame. */
+#museum-memory-grid[data-collection="all"] .museum-memory-card[data-featured="true"] {
+  border: 1px solid var(--museum-gold);
+  box-shadow: 0 10px 32px rgba(40, 30, 20, 0.09);
+}
+
+/* Feature its photograph without forcing a uniform crop. */
+#museum-memory-grid[data-collection="all"] .museum-memory-card[data-featured="true"] .museum-memory-card__media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+/* Give featured titles a little more presence. */
+#museum-memory-grid[data-collection="all"] .museum-memory-card[data-featured="true"] .museum-memory-card__title {
+  font-size: clamp(1.45rem, 2.5vw, 2rem);
+  line-height: 1.25;
+}
+
+/* A restrained label for the selected memory. */
+#museum-memory-grid[data-collection="all"] .museum-memory-card[data-featured="true"] .museum-memory-card__content::before {
+  content: "FEATURED MEMORY";
+  display: block;
+  margin-bottom: 12px;
+  color: var(--museum-olive);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+/* Don't distort text-only letters. */
+#museum-memory-grid[data-collection="all"] .museum-memory-card[data-featured="true"][data-collection="letters"] .museum-memory-card__media {
+  aspect-ratio: auto;
+}
+
+/* Respect reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  #museum-memory-grid[data-collection="all"] .museum-memory-card[data-featured="true"] {
+    transition: none;
+  }
+}
+
+/* ==========================================
+   FEATURED MEMORY — FINAL LAYOUT OVERRIDE
+========================================== */
+
+/* Only the memory you selected gets the featured layout. */
+@media (min-width: 700px) {
+  #museum-memory-grid[data-collection="all"] .museum-memory-card[data-featured="true"] {
+    grid-column: 1 / -1;
+  }
+
+  #museum-memory-grid[data-collection="all"] .museum-memory-card[data-featured="true"] .museum-memory-card__media {
+    aspect-ratio: 16 / 7;
+  }
+}
+
+@media (min-width: 1050px) {
+  #museum-memory-grid[data-collection="all"] .museum-memory-card[data-featured="true"] .museum-memory-card__media {
+    aspect-ratio: 16 / 6;
+  }
+}
+
+/* ==========================================
+   PHASE 4C — DISTINCT MEMORY POST DESIGNS
+========================================== */
+
+/* LETTER: text-first, like a private written keepsake */
+.museum-memory-card--letter {
+  background: #fbf7ef;
+  border: 1px solid #e8ddca;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(76, 58, 37, 0.06);
+}
+
+.museum-memory-card--letter .museum-memory-card__media {
+  display: none;
+}
+
+.museum-memory-card--letter .museum-memory-card__content {
+  padding: 26px 24px 28px;
+}
+
+.museum-memory-card--letter .museum-memory-card__collection {
+  color: #94754c;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.museum-memory-card--letter .museum-memory-card__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.7rem, 4vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.museum-memory-card--letter .museum-memory-card__body {
+  color: #62584b;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.15rem;
+  line-height: 1.8;
+}
+
+/* MILESTONE: a special moment worth highlighting */
+.museum-memory-card--milestone {
+  border: 1px solid #d9c39c;
+  border-radius: 5px;
+  background: #fffdf8;
+}
+
+.museum-memory-card--milestone .museum-memory-card__content {
+  border-top: 3px solid #b99a64;
+}
+
+.museum-memory-card--milestone .museum-memory-card__collection {
+  color: #92713e;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.museum-memory-card--milestone .museum-memory-card__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+}
+
+/* NOTE: a compact, text-first thought */
+.museum-memory-card--note {
+  background: #f5f4ee;
+  border: 1px solid #e5e2d7;
+  border-radius: 5px;
+}
+
+.museum-memory-card--note .museum-memory-card__media {
+  display: none;
+}
+
+.museum-memory-card--note .museum-memory-card__content {
+  padding: 20px 22px 23px;
+}
+
+.museum-memory-card--note .museum-memory-card__collection {
+  color: #77745f;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.museum-memory-card--note .museum-memory-card__title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.65rem;
+  font-weight: 500;
+}
+
+.museum-memory-card--note .museum-memory-card__body {
+  color: #625f53;
+  line-height: 1.75;
+}
+
+/* Keep every post type comfortable to read on phones */
+@media (max-width: 600px) {
+  .museum-memory-card--letter .museum-memory-card__content {
+    padding: 22px 19px 24px;
+  }
+
+  .museum-memory-card--note .museum-memory-card__content {
+    padding: 18px 19px 21px;
+  }
+}
+
+/* ==========================================
+   FINAL REFINEMENT — POST TYPE DETAIL STYLES
+========================================== */
+
+.museum-memory-dialog__type {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin: 0 0 17px;
+  padding: 5px 9px;
+  border: 1px solid var(--museum-line);
+  color: var(--museum-muted);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.museum-memory-dialog--letter {
+  border-color: #d9c7a8;
+  background: #fbf7ef;
+}
+
+.museum-memory-dialog--letter .museum-memory-dialog__content {
+  background:
+    linear-gradient(to bottom,
+      transparent 0,
+      transparent 2.15rem,
+      rgba(150, 120, 90, 0.07) 2.2rem,
+      transparent 2.25rem);
+}
+
+.museum-memory-dialog--letter .museum-memory-dialog__body {
+  font-family: var(--museum-serif);
+  font-size: 1.12rem;
+  line-height: 1.95;
+}
+
+.museum-memory-dialog--letter .museum-memory-dialog__type {
+  border-color: #d9c7a8;
+  color: #8b704b;
+}
+
+.museum-memory-dialog--milestone {
+  border-color: var(--museum-gold);
+}
+
+.museum-memory-dialog--milestone .museum-memory-dialog__type {
+  border-color: var(--museum-gold);
+  color: #826638;
+  background: rgba(185, 154, 104, 0.08);
+}
+
+.museum-memory-dialog--note {
+  background: #f5f4ee;
+}
+
+.museum-memory-dialog--note .museum-memory-dialog__content {
+  background: #f5f4ee;
+}
+
+.museum-memory-dialog--note .museum-memory-dialog__body {
+  color: #625f53;
+}
+
+.museum-memory-dialog--note .museum-memory-dialog__type {
+  border-color: #dedbcf;
+  color: #77745f;
+}
+
+/* In the mixed exhibition, keep long writing as a preview.
+   Opening the card reveals the complete text. */
+#museum-memory-grid[data-collection="all"] .museum-memory-card--letter .museum-memory-card__body,
+#museum-memory-grid[data-collection="all"] .museum-memory-card--note .museum-memory-card__body {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+#museum-memory-grid[data-collection="all"] .museum-memory-card--letter .museum-memory-card__body {
+  -webkit-line-clamp: 5;
+}
+
+#museum-memory-grid[data-collection="all"] .museum-memory-card--note .museum-memory-card__body {
+  -webkit-line-clamp: 4;
+}
+
+.museum-memory-card--milestone .museum-memory-card__collection {
+  color: #8b704b;
+}
+
+@media (max-width: 560px) {
+  .museum-memory-dialog__type {
+    margin-bottom: 13px;
+  }
+
+  .museum-memory-dialog--letter .museum-memory-dialog__body {
+    font-size: 1.04rem;
+    line-height: 1.85;
+  }
+}
+
+/* Compact type labels make text-first posts recognisable in mixed collections. */
+.museum-memory-card__type {
+  display: inline-flex;
+  width: fit-content;
+  margin: 0 0 10px;
+  padding: 4px 8px;
+  border: 1px solid var(--museum-line);
+  border-radius: 2px;
+  color: var(--museum-muted);
+  font-size: 0.59rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.museum-memory-card--letter .museum-memory-card__type {
+  border-color: #d9c7a8;
+  color: #8b704b;
+}
+
+.museum-memory-card--milestone .museum-memory-card__type {
+  border-color: var(--museum-gold);
+  color: #826638;
+  background: rgba(185, 154, 104, 0.08);
+}
+
+.museum-memory-card--note .museum-memory-card__type {
+  border-color: #dedbcf;
+  color: #77745f;
+}

@@ -1,0 +1,257 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F7F1E8">
+
+  <meta
+    name="description"
+    content="A little museum dedicated to the moments that matter."
+  >
+
+  <title>The Museum of Us — A Private Collection</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="./css/style.css">
+
+<script
+  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  defer
+></script>
+
+<script src="./js/supabase-client.js" defer></script>
+<script src="./js/access-control.js" defer></script>
+<script src="./js/app.js" defer></script>
+</head>
+
+<body>
+  <div class="page-shell">
+
+    <header class="site-header">
+      <a class="brand" href="./index.html" aria-label="The Museum of Us home">
+        <span class="brand-mark" aria-hidden="true">M</span>
+
+        <span class="brand-copy">
+          <span class="brand-name">THE MUSEUM <span>OF US</span></span>
+          <span class="brand-tagline">AN ARCHIVE OF LITTLE THINGS</span>
+        </span>
+      </a>
+
+      <div class="header-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span> A PRIVATE COLLECTION </span>
+      </div>
+    </header>
+
+    <main class="main-grid">
+
+      <!-- INTRODUCTION -->
+      <section class="intro-column" aria-labelledby="main-title">
+
+        <p class="eyebrow">
+          <span class="eyebrow-line" aria-hidden="true"></span>
+          A PLACE MADE FOR TWO
+        </p>
+
+        <h1 id="main-title">
+          A little world
+          <em>only we know.</em>
+        </h1>
+
+        <p class="hero-copy">
+          An intimate archive of shared moments, small details,
+          and a story that is still being written.
+        </p>
+
+        <!-- Original artwork made with CSS -->
+        <div class="art-stage" aria-hidden="true">
+
+          <div class="art-glow"></div>
+
+          <div class="artwork-card">
+
+            <div class="art-meta">
+              <span>PERSONAL ARCHIVE</span>
+              <span>VOL. 001</span>
+            </div>
+
+            <div class="arch-window">
+
+              <span class="moon"></span>
+
+              <span class="star star-one">✦</span>
+              <span class="star star-two">✦</span>
+              <span class="star star-three">·</span>
+              <span class="star star-four">✧</span>
+              <span class="star star-five">·</span>
+
+              <span class="orbit orbit-one"></span>
+
+              <div class="landscape landscape-back"></div>
+              <div class="landscape landscape-front"></div>
+
+              <div class="tiny-ground"></div>
+            </div>
+
+            <div class="art-caption">
+              <span class="caption-index">EXHIBIT NO. 001</span>
+              <span class="caption-title">THE BEGINNING</span>
+              <span class="caption-note">
+                Every story starts somewhere.
+              </span>
+            </div>
+
+          </div>
+
+          <div class="side-note">
+            <span class="side-note-symbol">✳</span>
+            <span>COLLECTED WITH CARE<br>KEPT WITH MEANING</span>
+          </div>
+
+        </div>
+
+        <div class="intro-footnote">
+          <span>VOLUME 01</span>
+          <span class="footnote-rule" aria-hidden="true"></span>
+          <span>OUR STORY, STILL UNFOLDING</span>
+        </div>
+
+      </section>
+
+      <!-- VISITOR ACCESS -->
+      <aside class="access-column" aria-labelledby="access-title">
+
+        <div class="access-card">
+
+          <div class="card-topline">
+            <span class="card-symbol" aria-hidden="true">✳</span>
+            <span class="card-topline-label">VISITOR ACCESS</span>
+            <span class="card-number">01 / 01</span>
+          </div>
+
+          <div class="card-intro">
+            <p class="card-eyebrow">YOUR INVITATION AWAITS</p>
+
+            <h2 id="access-title">
+              Step inside
+              <em>our story.</em>
+            </h2>
+
+            <p>
+              Some doors lead to places.
+              This one leads to a collection of moments.
+            </p>
+          </div>
+
+          <form id="login-form">
+
+            <div class="form-field">
+              <label for="visitor-email">Email address</label>
+
+              <div class="input-wrap">
+                <span class="input-symbol" aria-hidden="true">✳</span>
+
+                <input
+                  id="visitor-email"
+                  name="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  autocomplete="username"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="visitor-password">Password</label>
+
+              <div class="input-wrap">
+                <span class="input-symbol" aria-hidden="true">⌑</span>
+
+                <input
+                  id="visitor-password"
+                  name="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  autocomplete="current-password"
+                  required
+                >
+
+                <button
+                  class="password-toggle"
+                  id="toggle-password"
+                  type="button"
+                  aria-controls="visitor-password"
+                  aria-pressed="false"
+                >
+                  Show
+                </button>
+              </div>
+            </div>
+
+            <button class="enter-button" type="submit">
+              <span>Enter the museum</span>
+              <span class="button-arrow" aria-hidden="true">↗</span>
+            </button>
+
+          </form>
+
+          <p
+  class="preview-warning"
+  id="auth-status"
+  role="status"
+  aria-live="polite"
+  hidden
+></p>
+
+<button
+  class="sign-out-button"
+  id="sign-out-button"
+  type="button"
+  hidden
+>
+  Sign out of the museum
+</button>
+
+          <div class="card-bottom-note">
+            <span class="lock-symbol" aria-hidden="true">◇</span>
+
+            <span>
+              <strong>PRIVATE ACCESS</strong>
+              <small>Only invited accounts can enter this collection.</small>
+            </span>
+          </div>
+
+        </div>
+
+        <p class="access-caption">
+          NO PUBLIC EXHIBITS
+          <span aria-hidden="true">—</span>
+          JUST OUR HISTORY
+        </p>
+
+      </aside>
+
+    </main>
+
+    <footer class="site-footer">
+      <span>A SMALL ARCHIVE OF WHAT MATTERS.</span>
+
+      <span class="footer-right">
+        DESIGNED WITH INTENTION
+        <span aria-hidden="true">✳</span>
+      </span>
+    </footer>
+
+  </div>
+</body>
+</html>

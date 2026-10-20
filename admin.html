@@ -1,0 +1,381 @@
+
+<!doctype html>
+<html lang="en" class="access-pending">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F7F1E8">
+  <meta name="description" content="Private curator dashboard for The Museum of Us.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>The Museum of Us — Curator's Office</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/admin.css">
+
+  <script>
+    document.documentElement.classList.add("access-pending");
+  </script>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    defer
+  ></script>
+
+  <script src="./js/supabase-client.js" defer></script>
+  <script src="./js/access-control.js" defer></script>
+  <script src="./js/page-guard.js" defer></script>
+  
+<script src="./js/admin-memory-editor.js" defer></script>
+
+</head>
+
+<body data-page-type="admin" data-allowed-roles="admin">
+
+  <div class="page-shell">
+
+    <header class="site-header admin-site-header">
+      <a class="admin-site-brand" href="./admin.html" aria-label="Samae — curator's office">
+        <img src="./assets/samae.svg" alt="Samae" class="admin-site-brand__logo">
+        <span class="admin-site-brand__divider" aria-hidden="true"></span>
+        <span class="admin-site-brand__context">CURATOR'S OFFICE</span>
+      </a>
+
+      <div class="portal-header-actions admin-header-actions">
+        <a class="portal-view-link admin-view-link" href="./museum.html">
+          <span>View museum</span><span aria-hidden="true">↗</span>
+        </a>
+        <button class="portal-sign-out admin-sign-out" id="global-sign-out" type="button">
+          Sign out
+        </button>
+      </div>
+    </header>
+
+    <main class="portal-main" id="protected-app">
+
+      <p
+        class="page-notice"
+        id="page-notice"
+        role="status"
+        aria-live="polite"
+        hidden
+      ></p>
+
+      <section class="portal-welcome admin-welcome" aria-labelledby="admin-welcome-title">
+        <div class="admin-welcome__masthead">
+          <span class="admin-welcome__private">
+            <span class="admin-welcome__dot" aria-hidden="true"></span>
+            PRIVATE CURATOR SPACE
+          </span>
+          <span class="admin-welcome__edition">THE MUSEUM OF US · THE BACK OFFICE</span>
+        </div>
+
+        <div class="admin-welcome__layout">
+          <div class="admin-welcome__copy">
+            <p class="admin-welcome__eyebrow">THE STORY, KEPT WITH CARE <span aria-hidden="true">—</span> YOUR WORKROOM</p>
+            <h1 id="admin-welcome-title" class="admin-welcome__title">
+              The curator's<br><em>workroom.</em>
+            </h1>
+            <p class="admin-welcome__description">
+              A quiet place to gather photographs, write down the little things,
+              and keep every chapter of your story in its place.
+            </p>
+            <a class="admin-welcome__link" href="#memory-manager-title">
+              <span>Open the memory archive</span>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                <path d="M4.5 12h14m-5.5-5.5 5.5 5.5-5.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+            <p class="admin-welcome__footnote">COLLECTED WITH CARE. KEPT CLOSE.</p>
+          </div>
+
+          <div class="admin-welcome__artwork" aria-hidden="true">
+            <div class="admin-welcome__artwork-inner">
+              <span class="admin-welcome__artwork-index">THE COLLECTION</span>
+              <img src="./assets/sunflower.svg" alt="" class="admin-welcome__sunflower">
+              <span class="admin-welcome__artwork-note">a little light,<br>kept close.</span>
+            </div>
+            <span class="admin-welcome__orbit admin-welcome__orbit--one"></span>
+            <span class="admin-welcome__orbit admin-welcome__orbit--two"></span>
+          </div>
+        </div>
+
+        <div class="admin-welcome__bottomline">
+          <span>PHOTOGRAPHS · LETTERS · MOMENTS</span>
+          <span>CURATOR ACCESS <span id="signed-in-name">MUSEUM CURATOR</span></span>
+        </div>
+      </section>
+
+      <section class="portal-section admin-tools-section" aria-labelledby="admin-tools-title">
+        <div class="portal-section-heading">
+          <div>
+            <p class="portal-overline">CONTENT MANAGEMENT</p>
+            <h2 id="admin-tools-title">Your workroom</h2>
+          </div>
+
+          <span class="section-count">ADMIN TOOLS</span>
+        </div>
+
+        <div class="portal-grid">
+
+          <article class="portal-card admin-card">
+            <span class="portal-card-index">TOOL 01</span>
+            <span class="portal-card-icon" aria-hidden="true">◫</span>
+            <h3>Memory archive</h3>
+            <p>
+              Create, edit, publish, and organise photographs and memories.
+            </p>
+            <span class="portal-card-status">AVAILABLE NOW</span>
+          </article>
+
+          <article class="portal-card admin-card">
+            <span class="portal-card-index">TOOL 02</span>
+            <span class="portal-card-icon" aria-hidden="true">↗</span>
+            <h3>Post formats</h3>
+            <p>
+              Present a memory as a photo, letter, milestone, or short note.
+            </p>
+            <span class="portal-card-status">AVAILABLE NOW</span>
+          </article>
+
+          <article class="portal-card admin-card">
+            <span class="portal-card-index">TOOL 03</span>
+            <span class="portal-card-icon" aria-hidden="true">✦</span>
+            <h3>Featured memories</h3>
+            <p>
+              Select special moments to give them a leading place in the archive.
+            </p>
+            <span class="portal-card-status">AVAILABLE NOW</span>
+          </article>
+
+          <article class="portal-card admin-card">
+            <span class="portal-card-index">TOOL 04</span>
+            <span class="portal-card-icon" aria-hidden="true">↗</span>
+            <h3>Visitor preview</h3>
+            <p>
+              Open the museum to review the published collection as a visitor sees it.
+            </p>
+            <span class="portal-card-status">PREVIEW AVAILABLE</span>
+          </article>
+
+        </div>
+      </section>
+
+      
+<!-- PHASE 3C: ADMIN MEMORY EDITOR -->
+<section class="admin-memory-manager" aria-labelledby="memory-manager-title">
+
+  <header class="admin-memory-manager__header">
+    <p class="admin-memory-manager__eyebrow">THE CURATOR'S DESK</p>
+    <h2 id="memory-manager-title">Memory Archive</h2>
+    <p>Create a memory, keep the details, and choose when it becomes visible.</p>
+  </header>
+
+  <p
+    id="admin-memory-status"
+    class="admin-memory-status"
+    role="status"
+    aria-live="polite"
+  >Checking curator access…</p>
+
+  <form id="museum-memory-form" class="admin-memory-form">
+
+    <input type="hidden" id="memory-id" name="memory_id">
+
+    <div class="admin-memory-form__intro admin-memory-field--wide">
+      <p class="admin-memory-manager__eyebrow">01 / COMPOSE A MEMORY</p>
+      <h3>Create something worth keeping.</h3>
+      <p>Choose a format, add the details, and decide when it belongs in the collection.</p>
+    </div>
+
+    <div class="admin-memory-field admin-memory-field--wide">
+      <label for="memory-title">Memory title <span>*</span></label>
+      <input
+        id="memory-title"
+        name="title"
+        type="text"
+        maxlength="120"
+        placeholder="A day worth remembering"
+        required
+      >
+    </div>
+
+    <div class="admin-memory-field">
+      <label for="memory-caption">Short caption</label>
+      <input
+        id="memory-caption"
+        name="caption"
+        type="text"
+        maxlength="600"
+        placeholder="A little detail about this memory…"
+      >
+    </div>
+
+    <div class="admin-memory-field admin-memory-field--wide">
+      <label for="memory-body">Story, letter, or note</label>
+      <textarea
+        id="memory-body"
+        name="body"
+        rows="6"
+        maxlength="10000"
+        placeholder="Write the story, letter, or thought you want to keep…"
+      ></textarea>
+    </div>
+
+    
+<div class="admin-memory-field">
+  <label for="memory-collection">Collection <span>*</span></label>
+  <select id="memory-collection" name="collection" required>
+    <option value="gallery">Memory Gallery</option>
+    <option value="timeline">Our Story — Timeline</option>
+    <option value="letters">Letters Archive</option>
+    <option value="hidden">Hidden Exhibition</option>
+  </select>
+</div>
+
+<div class="admin-memory-field">
+  <label for="memory-post-type">
+    Post Type
+    <span>*</span>
+  </label>
+  <select name="post_type" id="memory-post-type" required>
+    <option value="photo">Photo Memory</option>
+    <option value="letter">Letter</option>
+    <option value="milestone">Milestone / Special Moment</option>
+    <option value="note">Short Note</option>
+  </select>
+  <p class="admin-memory-help">
+    This controls how the memory looks. Collection controls where it appears.
+  </p>
+</div>
+
+
+    <div class="admin-memory-field">
+      <label for="memory-date">Memory date</label>
+      <input id="memory-date" name="memory_date" type="date">
+      <p class="admin-memory-help">Leave blank if you don't want to show a date.</p>
+    </div>
+
+    <div class="admin-memory-field admin-memory-field--wide">
+      <label for="memory-image">Image</label>
+      <input
+        id="memory-image"
+        name="image"
+        type="file"
+        accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif"
+      >
+      <p class="admin-memory-help">
+        Optional for photo and milestone posts. Letters and notes can be text-only. JPEG, PNG, WebP or GIF; maximum 5 MB.
+        HEIC/HEIF photos aren't supported yet.
+        When editing, leave this empty to keep the current image.
+      </p>
+      <div id="memory-current-image" class="admin-memory-current-image"></div>
+    </div>
+
+    <div class="admin-memory-field">
+      <label for="memory-alt-text">Image description</label>
+      <input
+        id="memory-alt-text"
+        name="alt_text"
+        type="text"
+        maxlength="250"
+        placeholder="A short description of the image"
+      >
+      <p class="admin-memory-help">
+        Used by screen readers and shown if the image cannot load.
+      </p>
+    </div>
+
+    <div class="admin-memory-field">
+      <label for="memory-sort-order">Display order</label>
+      <input
+        id="memory-sort-order"
+        name="sort_order"
+        type="number"
+        step="1"
+        value="0"
+      >
+      <p class="admin-memory-help">
+        Smaller numbers appear first within the chosen collection.
+      </p>
+    </div>
+
+    <label class="admin-memory-publish">
+      <input id="memory-published" name="is_published" type="checkbox">
+      <span>
+        <strong>Publish this memory</strong>
+        <small>When checked, the memory can appear in the visitor gallery.</small>
+      </span>
+    </label>
+
+    
+<label class="admin-memory-field admin-memory-field--checkbox">
+  <input
+    type="checkbox"
+    name="is_featured"
+    id="memory-is-featured"
+  >
+  <span>
+    <strong>Featured Memory</strong>
+    <small>
+      Highlight this memory in the All Memories exhibition.
+    </small>
+  </span>
+</label>
+
+
+    <div class="admin-memory-form__actions">
+      <button id="memory-save-button" type="submit">
+        Save memory
+      </button>
+      <button id="memory-clear-button" type="button">
+        Clear form
+      </button>
+    </div>
+  </form>
+
+  <div class="admin-memory-list-heading">
+    <div>
+      <p class="admin-memory-manager__eyebrow">YOUR ARCHIVE</p>
+      <h3>Saved memories</h3>
+    </div>
+    <button id="memory-refresh-button" type="button" class="admin-memory-secondary">
+      Refresh
+    </button>
+  </div>
+
+  <div id="admin-memory-list" class="admin-memory-list">
+    <p>Loading saved memories…</p>
+  </div>
+
+</section>
+<!-- END PHASE 3C -->
+
+
+    </main>
+
+    <section class="access-message" id="access-message" hidden>
+      <p class="portal-overline">ACCESS NOTICE</p>
+      <h1 class="portal-heading">We couldn't verify access.</h1>
+      <p id="access-message-text" aria-live="polite"></p>
+      <a class="portal-back-link" href="./index.html">
+        Return to the entrance ↗
+      </a>
+    </section>
+
+    <footer class="site-footer">
+      <span>A SMALL ARCHIVE OF WHAT MATTERS.</span>
+      <span class="footer-right">CURATOR'S OFFICE <span>✳</span></span>
+    </footer>
+
+  </div>
+
+</body>
+</html>

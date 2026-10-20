@@ -1,0 +1,232 @@
+
+<!doctype html>
+<html lang="en" class="access-pending">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F7F1E8">
+  <meta name="description" content="A private archive of photographs, letters, and moments from The Museum of Us.">
+
+  <title>The Museum of Us — The Collection</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/museum.css">
+
+  <script>
+    document.documentElement.classList.add("access-pending");
+  </script>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    defer
+  ></script>
+
+  <script src="./js/supabase-client.js" defer></script>
+  <script src="./js/access-control.js" defer></script>
+  <script src="./js/page-guard.js" defer></script>
+  
+<script src="./js/museum-gallery.js" defer></script>
+
+</head>
+
+<body data-page-type="museum" data-allowed-roles="visitor,admin">
+
+  <div class="page-shell">
+
+    <header class="site-header museum-site-header">
+      <a class="museum-site-brand" href="./museum.html" aria-label="Samae — museum home">
+        <img src="./assets/samae.svg" alt="Samae" class="museum-site-brand__logo">
+      </a>
+
+      <div class="portal-header-actions museum-header-actions">
+        <span class="signed-in-label" id="signed-in-name">Museum Visitor</span>
+        <button class="portal-sign-out" id="global-sign-out" type="button">
+          Sign out
+        </button>
+      </div>
+    </header>
+
+    <main class="portal-main" id="protected-app">
+
+      <p
+        class="page-notice"
+        id="page-notice"
+        role="status"
+        aria-live="polite"
+        hidden
+      ></p>
+
+<!-- PHASE 4A: THE MUSEUM WELCOME -->
+<section class="museum-welcome" aria-labelledby="museum-welcome-title">
+
+  <div class="museum-welcome__masthead">
+    <span class="museum-welcome__private">
+      <span class="museum-welcome__private-dot" aria-hidden="true"></span>
+      A PRIVATE ARCHIVE
+    </span>
+    <span class="museum-welcome__edition">THE COLLECTION · NO. 001</span>
+  </div>
+
+  <div class="museum-welcome__layout">
+
+    <div class="museum-welcome__copy">
+      <p class="museum-welcome__eyebrow">
+        A PLACE FOR WHAT MATTERS
+        <span aria-hidden="true">—</span>
+        OUR ONGOING STORY
+      </p>
+
+      <h1 id="museum-welcome-title">
+        The little things<br>
+        are <em>the big things.</em>
+      </h1>
+
+      <p class="museum-welcome__description">
+        Photographs, letters, ordinary days, and details we never want to lose.
+        A personal archive of the moments that make our story ours.
+      </p>
+
+      <a
+        class="museum-welcome__link"
+        href="#museum-collection-nav"
+      >
+        <span>Enter the collection</span>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M4.5 12h14m-5.5-5.5 5.5 5.5-5.5 5.5"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+
+      <p class="museum-welcome__footnote">
+        COLLECTED WITH CARE. KEPT CLOSE.
+      </p>
+    </div>
+
+    <div class="museum-welcome__artwork" aria-hidden="true">
+      <div class="museum-welcome__artwork-inner">
+        <span class="museum-welcome__artwork-index">NO. 01</span>
+
+        <img
+          src="./assets/sunflower.svg"
+          alt=""
+          class="museum-welcome__sunflower"
+        >
+
+        <span class="museum-welcome__artwork-note">
+          a little light,<br>kept close.
+        </span>
+      </div>
+
+      <span class="museum-welcome__orbit museum-welcome__orbit--one"></span>
+      <span class="museum-welcome__orbit museum-welcome__orbit--two"></span>
+    </div>
+
+  </div>
+
+  <div class="museum-welcome__bottomline">
+    <span>MEMORIES · LETTERS · MOMENTS</span>
+    <span>A STORY STILL UNFOLDING <span aria-hidden="true">↗</span></span>
+  </div>
+
+</section>
+<!-- END PHASE 4A: THE MUSEUM WELCOME -->
+
+<!-- THE MUSEUM OF US: REAL MEMORY GALLERY -->
+<section class="museum-gallery" aria-labelledby="museum-gallery-title">
+
+  <div class="museum-gallery__heading">
+    <p class="museum-gallery__eyebrow">THE PRIVATE ARCHIVE</p>
+
+    <h2 id="museum-gallery-title">
+      Little moments, kept forever.
+    </h2>
+
+    <p class="museum-gallery__intro">
+      Every memory has a place here.
+    </p>
+
+    
+<nav
+  id="museum-collection-nav"
+  class="museum-collection-nav"
+  aria-label="Museum collections"
+>
+  <button type="button" data-collection="all" aria-pressed="true">
+    All memories
+  </button>
+
+  <button type="button" data-collection="gallery" aria-pressed="false">
+    Memory Gallery
+  </button>
+
+  <button type="button" data-collection="timeline" aria-pressed="false">
+    Our Story
+  </button>
+
+  <button type="button" data-collection="letters" aria-pressed="false">
+    Letters Archive
+  </button>
+
+  <button
+    type="button"
+    data-collection="hidden"
+    aria-pressed="false"
+    disabled
+  >
+    Hidden Exhibition · Locked
+  </button>
+</nav>
+
+
+  </div>
+
+  <p
+    id="museum-memory-status"
+    class="museum-memory-status"
+    role="status"
+    aria-live="polite"
+  >
+    Opening the archive…
+  </p>
+
+  <div
+    id="museum-memory-grid"
+    class="museum-memory-grid"
+  ></div>
+
+</section>
+<!-- END MEMORY GALLERY -->
+
+
+    </main>
+
+    <section class="access-message" id="access-message" hidden>
+      <p class="portal-overline">ACCESS NOTICE</p>
+      <h1 class="portal-heading">We couldn't verify access.</h1>
+      <p id="access-message-text" aria-live="polite"></p>
+      <a class="portal-back-link" href="./index.html">
+        Return to the entrance ↗
+      </a>
+    </section>
+
+    <footer class="site-footer museum-site-footer">
+      <span>A SMALL ARCHIVE OF WHAT MATTERS.</span>
+      <span class="footer-right">THE COLLECTION <span>✳</span></span>
+    </footer>
+
+  </div>
+
+</body>
+</html>
