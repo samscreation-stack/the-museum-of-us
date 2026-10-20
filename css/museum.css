@@ -1532,3 +1532,143 @@ body.museum-dialog-open {
   border-color: #dedbcf;
   color: #77745f;
 }
+
+
+/* SAM'S MESSAGES — invitation placed between the welcome and gallery */
+.museum-messages-invitation {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: clamp(2.5rem, 6vw, 5.5rem) 0 clamp(3.5rem, 7vw, 6rem);
+  padding: clamp(1.5rem, 4vw, 3.25rem);
+  overflow: hidden;
+  border: 1px solid rgba(105, 83, 61, 0.18);
+  border-radius: 1.25rem;
+  background: linear-gradient(125deg, #f3e9dc 0%, #fbf7f0 58%, #f0e5d5 100%);
+  box-shadow: 0 18px 50px rgba(73, 54, 35, 0.06);
+}
+
+.museum-messages-invitation::after {
+  content: "S";
+  position: absolute;
+  right: 26%;
+  bottom: -4.5rem;
+  color: rgba(111, 83, 55, 0.045);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(12rem, 26vw, 23rem);
+  font-style: italic;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.museum-messages-invitation__copy,
+.museum-messages-invitation__button {
+  position: relative;
+  z-index: 1;
+}
+
+.museum-messages-invitation__copy {
+  max-width: 35rem;
+}
+
+.museum-messages-invitation__eyebrow {
+  margin: 0 0 0.85rem;
+  color: #8a6c4e;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.5;
+}
+
+.museum-messages-invitation__copy h2 {
+  margin: 0;
+  color: #30271f;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2rem, 4.3vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+.museum-messages-invitation__description {
+  max-width: 30rem;
+  margin: 1rem 0 0;
+  color: #74685b;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+
+.museum-messages-invitation__button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 1.15rem;
+  min-height: 3.8rem;
+  max-width: 100%;
+  padding: 1rem 1.35rem;
+  border: 1px solid #42372c;
+  border-radius: 999px;
+  background: #42372c;
+  color: #fffaf3;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: background-color 180ms ease, color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.museum-messages-invitation__button svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  flex: 0 0 auto;
+  transition: transform 180ms ease;
+}
+
+.museum-messages-invitation__button:hover {
+  transform: translateY(-2px);
+  background: #5b4938;
+  box-shadow: 0 10px 24px rgba(66, 55, 44, 0.16);
+}
+
+.museum-messages-invitation__button:hover svg {
+  transform: translateX(3px);
+}
+
+.museum-messages-invitation__button:focus-visible {
+  outline: 3px solid #a88763;
+  outline-offset: 4px;
+}
+
+@media (max-width: 760px) {
+  .museum-messages-invitation {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 1.6rem;
+    border-radius: 1rem;
+  }
+
+  .museum-messages-invitation::after {
+    right: -0.5rem;
+    bottom: 1rem;
+    font-size: 13rem;
+  }
+
+  .museum-messages-invitation__button {
+    align-self: stretch;
+    justify-content: space-between;
+    min-height: 3.65rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .museum-messages-invitation__button,
+  .museum-messages-invitation__button svg {
+    transition: none;
+  }
+}

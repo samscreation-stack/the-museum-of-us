@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#F7F1E8">
+  <meta name="theme-color" content="#F8F5EF">
 
   <meta
     name="description"
@@ -33,12 +33,19 @@
 <script src="./js/app.js" defer></script>
 </head>
 
-<body>
+<body class="login-page">
   <div class="page-shell">
 
     <header class="site-header">
       <a class="brand" href="./index.html" aria-label="The Museum of Us home">
-        <span class="brand-mark" aria-hidden="true">M</span>
+        <img
+          class="brand-logo"
+          src="./assets/samae.svg"
+          alt=""
+          width="72"
+          height="56"
+          fetchpriority="high"
+        >
 
         <span class="brand-copy">
           <span class="brand-name">THE MUSEUM <span>OF US</span></span>
@@ -85,21 +92,18 @@
             </div>
 
             <div class="arch-window">
-
-              <span class="moon"></span>
-
-              <span class="star star-one">✦</span>
-              <span class="star star-two">✦</span>
-              <span class="star star-three">·</span>
-              <span class="star star-four">✧</span>
-              <span class="star star-five">·</span>
-
-              <span class="orbit orbit-one"></span>
-
-              <div class="landscape landscape-back"></div>
-              <div class="landscape landscape-front"></div>
-
-              <div class="tiny-ground"></div>
+              <span class="sunflower-halo" aria-hidden="true"></span>
+              <span class="sunflower-orbit sunflower-orbit--one" aria-hidden="true"></span>
+              <span class="sunflower-orbit sunflower-orbit--two" aria-hidden="true"></span>
+              <img
+                class="login-sunflower"
+                src="./assets/sunflower.svg"
+                alt=""
+                width="280"
+                height="280"
+                decoding="async"
+              >
+              <span class="sunflower-plate-label">PRESERVED IN THE EVERYDAY</span>
             </div>
 
             <div class="art-caption">
@@ -158,7 +162,12 @@
               <label for="visitor-email">Email address</label>
 
               <div class="input-wrap">
-                <span class="input-symbol" aria-hidden="true">✳</span>
+                <span class="input-symbol" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <rect x="3.5" y="5.5" width="17" height="13" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="m4.5 7 7.5 5.5L19.5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
 
                 <input
                   id="visitor-email"
@@ -175,7 +184,13 @@
               <label for="visitor-password">Password</label>
 
               <div class="input-wrap">
-                <span class="input-symbol" aria-hidden="true">⌑</span>
+                <span class="input-symbol" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <rect x="4.5" y="10" width="15" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M8 10V7.5a4 4 0 0 1 8 0V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <circle cx="12" cy="15" r="1" fill="currentColor"/>
+                  </svg>
+                </span>
 
                 <input
                   id="visitor-password"
