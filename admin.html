@@ -18,6 +18,7 @@
   >
 
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css">
   <link rel="stylesheet" href="./css/admin.css">
 
   <script>
@@ -32,8 +33,8 @@
   <script src="./js/supabase-client.js" defer></script>
   <script src="./js/access-control.js" defer></script>
   <script src="./js/page-guard.js" defer></script>
-  
-<script src="./js/admin-memory-editor.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js" defer></script>
+  <script src="./js/admin-memory-editor.js" defer></script>
 
 </head>
 
@@ -169,194 +170,226 @@
       </section>
 
       
-<!-- PHASE 3C: ADMIN MEMORY EDITOR -->
+<!-- CURATOR'S POST COMPOSER -->
 <section class="admin-memory-manager" aria-labelledby="memory-manager-title">
-
   <header class="admin-memory-manager__header">
     <p class="admin-memory-manager__eyebrow">THE CURATOR'S DESK</p>
     <h2 id="memory-manager-title">Memory Archive</h2>
-    <p>Create a memory, keep the details, and choose when it becomes visible.</p>
+    <p>Make a post, give it a home, and publish it when it feels right.</p>
   </header>
 
-  <p
-    id="admin-memory-status"
-    class="admin-memory-status"
-    role="status"
-    aria-live="polite"
-  >Checking curator access…</p>
+  <p id="admin-memory-status" class="admin-memory-status" role="status" aria-live="polite">Checking curator access…</p>
 
-  <form id="museum-memory-form" class="admin-memory-form">
+  <section class="admin-post-start" id="admin-post-start" aria-labelledby="admin-post-start-title">
+    <div class="admin-post-start__copy">
+      <span class="admin-post-start__eyebrow">A NEW CHAPTER</span>
+      <h3 id="admin-post-start-title">Something to remember?</h3>
+      <p>Start with a photograph, a letter, a milestone, or a small note. The composer will adapt to what you're making.</p>
+    </div>
+    <button class="admin-make-post-button" id="admin-make-post" type="button">
+      <span class="admin-make-post-button__plus" aria-hidden="true">＋</span>
+      <span>Make a post</span>
+      <span class="admin-make-post-button__arrow" aria-hidden="true">↗</span>
+    </button>
+    <div class="admin-post-start__foot"><span>PHOTO</span><i aria-hidden="true"></i><span>LETTER</span><i aria-hidden="true"></i><span>MILESTONE</span><i aria-hidden="true"></i><span>NOTE</span></div>
+  </section>
 
+  <section class="admin-post-type-picker" id="admin-post-type-picker" aria-labelledby="admin-post-type-title" hidden>
+    <div class="admin-post-type-picker__heading">
+      <div>
+        <p class="admin-memory-manager__eyebrow">STEP 01 / FORMAT</p>
+        <h3 id="admin-post-type-title">What would you like to create?</h3>
+        <p>Choose a format. The tools will change to fit your post.</p>
+      </div>
+      <button class="admin-composer-text-button" id="admin-post-picker-back" type="button">Cancel</button>
+    </div>
+    <div class="admin-post-type-grid">
+      <button class="admin-post-type-card admin-post-type-card--photo" type="button" data-post-type="photo">
+        <span class="admin-post-type-card__icon" aria-hidden="true">▧</span>
+        <span class="admin-post-type-card__name">Photo memory</span>
+        <span class="admin-post-type-card__description">A photograph with a caption, for the moments worth seeing again.</span>
+        <span class="admin-post-type-card__action">Create photo post <span aria-hidden="true">↗</span></span>
+      </button>
+      <button class="admin-post-type-card admin-post-type-card--letter" type="button" data-post-type="letter">
+        <span class="admin-post-type-card__icon" aria-hidden="true">✉</span>
+        <span class="admin-post-type-card__name">Letter</span>
+        <span class="admin-post-type-card__description">A quiet page for words that deserve a little more space.</span>
+        <span class="admin-post-type-card__action">Write a letter <span aria-hidden="true">↗</span></span>
+      </button>
+      <button class="admin-post-type-card admin-post-type-card--milestone" type="button" data-post-type="milestone">
+        <span class="admin-post-type-card__icon" aria-hidden="true">✳</span>
+        <span class="admin-post-type-card__name">Milestone</span>
+        <span class="admin-post-type-card__description">Mark a date, an arrival, a first, or a moment that changed something.</span>
+        <span class="admin-post-type-card__action">Keep a milestone <span aria-hidden="true">↗</span></span>
+      </button>
+      <button class="admin-post-type-card admin-post-type-card--note" type="button" data-post-type="note">
+        <span class="admin-post-type-card__icon" aria-hidden="true">〰</span>
+        <span class="admin-post-type-card__name">Short note</span>
+        <span class="admin-post-type-card__description">A small thought, an inside joke, or a detail you never want to lose.</span>
+        <span class="admin-post-type-card__action">Write a note <span aria-hidden="true">↗</span></span>
+      </button>
+    </div>
+  </section>
+
+  <form id="museum-memory-form" class="admin-memory-form admin-composer-form" hidden>
     <input type="hidden" id="memory-id" name="memory_id">
+    <input type="checkbox" id="memory-published" name="is_published" aria-label="Publish status controlled by the Save as draft and Publish buttons" hidden>
 
-    <div class="admin-memory-form__intro admin-memory-field--wide">
-      <p class="admin-memory-manager__eyebrow">01 / COMPOSE A MEMORY</p>
-      <h3>Create something worth keeping.</h3>
-      <p>Choose a format, add the details, and decide when it belongs in the collection.</p>
+    <div class="admin-composer-toolbar">
+      <button class="admin-composer-text-button" id="admin-composer-back" type="button"><span aria-hidden="true">←</span> Change format</button>
+      <div class="admin-composer-toolbar__identity">
+        <span class="admin-composer-toolbar__eyebrow">THE MUSEUM OF US</span>
+        <strong id="admin-composer-heading">Create a photo memory</strong>
+      </div>
+      <span class="admin-composer-format-chip" id="admin-composer-format-chip">PHOTO</span>
     </div>
 
-    <div class="admin-memory-field admin-memory-field--wide">
-      <label for="memory-title">Memory title <span>*</span></label>
-      <input
-        id="memory-title"
-        name="title"
-        type="text"
-        maxlength="120"
-        placeholder="A day worth remembering"
-        required
-      >
-    </div>
+    <div class="admin-composer-layout">
+      <div class="admin-composer-fields">
+        <div class="admin-memory-form__intro admin-memory-field--wide">
+          <p class="admin-memory-manager__eyebrow">STEP 02 / COMPOSE</p>
+          <h3 id="admin-composer-intro-title">A moment, kept well.</h3>
+          <p id="admin-composer-intro-description">Add the photograph and the little details around it.</p>
+        </div>
 
-    <div class="admin-memory-field">
-      <label for="memory-caption">Short caption</label>
-      <input
-        id="memory-caption"
-        name="caption"
-        type="text"
-        maxlength="600"
-        placeholder="A little detail about this memory…"
-      >
-    </div>
+        <div class="admin-memory-field admin-memory-field--wide" id="memory-title-field">
+          <label for="memory-title" id="memory-title-label">Post title <span>*</span></label>
+          <input id="memory-title" name="title" type="text" maxlength="120" placeholder="A day worth remembering" required>
+        </div>
 
-    <div class="admin-memory-field admin-memory-field--wide">
-      <label for="memory-body">Story, letter, or note</label>
-      <textarea
-        id="memory-body"
-        name="body"
-        rows="6"
-        maxlength="10000"
-        placeholder="Write the story, letter, or thought you want to keep…"
-      ></textarea>
-    </div>
+        <div class="admin-memory-field admin-memory-field--wide" id="memory-caption-field">
+          <label for="memory-caption" id="memory-caption-label">Caption</label>
+          <textarea id="memory-caption" name="caption" rows="2" maxlength="600" placeholder="A little detail about this memory…"></textarea>
+          <p class="admin-memory-help" id="memory-caption-help">Keep it short; the moment can speak for itself.</p>
+        </div>
 
-    
-<div class="admin-memory-field">
-  <label for="memory-collection">Collection <span>*</span></label>
-  <select id="memory-collection" name="collection" required>
-    <option value="gallery">Memory Gallery</option>
-    <option value="timeline">Our Story — Timeline</option>
-    <option value="letters">Letters Archive</option>
-    <option value="hidden">Hidden Exhibition</option>
-  </select>
-</div>
+        <div class="admin-memory-field admin-memory-field--wide" id="memory-body-field">
+          <label for="memory-body" id="memory-body-label">Story or extra details</label>
+          <textarea id="memory-body" name="body" rows="7" maxlength="10000" placeholder="Write the story you want to keep…"></textarea>
+          <p class="admin-memory-help" id="memory-body-help">This is optional for photo posts, and the main space for letters and notes.</p>
+        </div>
 
-<div class="admin-memory-field">
-  <label for="memory-post-type">
-    Post Type
-    <span>*</span>
-  </label>
-  <select name="post_type" id="memory-post-type" required>
-    <option value="photo">Photo Memory</option>
-    <option value="letter">Letter</option>
-    <option value="milestone">Milestone / Special Moment</option>
-    <option value="note">Short Note</option>
-  </select>
-  <p class="admin-memory-help">
-    This controls how the memory looks. Collection controls where it appears.
-  </p>
-</div>
+        <div class="admin-memory-field admin-memory-field--wide admin-memory-field--image" id="memory-image-field">
+          <div class="admin-image-field-heading">
+            <label for="memory-image">Photograph <span class="admin-optional-label">OPTIONAL</span></label>
+            <span class="admin-image-field-heading__limit">UP TO 5 MB</span>
+          </div>
+          <div class="admin-image-dropzone" id="memory-image-dropzone">
+            <input id="memory-image" class="admin-file-input" name="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif">
+            <span class="admin-image-dropzone__icon" aria-hidden="true">↑</span>
+            <strong>Bring the moment in</strong>
+            <p>Choose an image from your device, or drop it here.</p>
+            <div class="admin-image-dropzone__actions">
+              <button class="admin-image-secondary-button" id="memory-choose-image" type="button">Choose image</button>
+              <button class="admin-image-secondary-button" id="memory-edit-image-button" type="button" hidden>Edit crop &amp; light</button>
+            </div>
+            <span class="admin-image-dropzone__formats">JPEG · PNG · WebP · GIF · 5 MB maximum</span>
+          </div>
+          <p class="admin-memory-help" id="memory-image-help">Crop and make small light/contrast adjustments before saving. Animated GIFs are kept as-is.</p>
+          <div id="memory-current-image" class="admin-memory-current-image"></div>
+        </div>
 
+        <div class="admin-memory-field admin-memory-field--wide admin-image-alt-field" id="memory-alt-field">
+          <label for="memory-alt-text">Image description</label>
+          <input id="memory-alt-text" name="alt_text" type="text" maxlength="250" placeholder="Describe the image for someone who cannot see it">
+          <p class="admin-memory-help">A short, helpful description for screen-reader users.</p>
+        </div>
 
-    <div class="admin-memory-field">
-      <label for="memory-date">Memory date</label>
-      <input id="memory-date" name="memory_date" type="date">
-      <p class="admin-memory-help">Leave blank if you don't want to show a date.</p>
-    </div>
+        <div class="admin-composer-settings">
+          <div class="admin-composer-settings__heading">
+            <div><span class="admin-memory-manager__eyebrow">POST SETTINGS</span><h4>Where it belongs</h4></div>
+            <span class="admin-composer-settings__note">You can change this later.</span>
+          </div>
+          <div class="admin-composer-settings__grid">
+            <div class="admin-memory-field">
+              <label for="memory-collection">Collection <span>*</span></label>
+              <select id="memory-collection" name="collection" required>
+                <option value="gallery">Memory Gallery</option>
+                <option value="timeline">Our Story — Timeline</option>
+                <option value="letters">Letters Archive</option>
+                <option value="hidden">Hidden Exhibition</option>
+              </select>
+            </div>
+            <div class="admin-memory-field">
+              <label for="memory-date">Memory date</label>
+              <input id="memory-date" name="memory_date" type="date">
+            </div>
+            <div class="admin-memory-field admin-memory-field--advanced">
+              <label for="memory-sort-order">Display order</label>
+              <input id="memory-sort-order" name="sort_order" type="number" step="1" value="0">
+              <p class="admin-memory-help">Smaller numbers appear first in a collection.</p>
+            </div>
+            <div class="admin-memory-field admin-memory-field--checkbox">
+              <label class="admin-memory-publish" for="memory-is-featured">
+                <input type="checkbox" name="is_featured" id="memory-is-featured">
+                <span><strong>Feature this memory</strong><small>Give it a leading place in All Memories.</small></span>
+              </label>
+            </div>
+          </div>
+          <div class="admin-memory-field admin-memory-field--native-type" hidden>
+            <label for="memory-post-type">Post type</label>
+            <select name="post_type" id="memory-post-type" required>
+              <option value="photo">Photo Memory</option><option value="letter">Letter</option><option value="milestone">Milestone / Special Moment</option><option value="note">Short Note</option>
+            </select>
+          </div>
+        </div>
 
-    <div class="admin-memory-field admin-memory-field--wide">
-      <label for="memory-image">Image</label>
-      <input
-        id="memory-image"
-        name="image"
-        type="file"
-        accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif"
-      >
-      <p class="admin-memory-help">
-        Optional for photo and milestone posts. Letters and notes can be text-only. JPEG, PNG, WebP or GIF; maximum 5 MB.
-        HEIC/HEIF photos aren't supported yet.
-        When editing, leave this empty to keep the current image.
-      </p>
-      <div id="memory-current-image" class="admin-memory-current-image"></div>
-    </div>
+        <div class="admin-composer-submit-row">
+          <button id="memory-save-button" type="submit">Publish memory <span aria-hidden="true">↗</span></button>
+          <button id="memory-draft-button" type="submit">Save as draft</button>
+          <button id="memory-clear-button" type="button">Discard</button>
+        </div>
+        <p class="admin-composer-footnote">Nothing becomes visible in the museum until you publish it. Hidden Exhibition access rules still apply.</p>
+      </div>
 
-    <div class="admin-memory-field">
-      <label for="memory-alt-text">Image description</label>
-      <input
-        id="memory-alt-text"
-        name="alt_text"
-        type="text"
-        maxlength="250"
-        placeholder="A short description of the image"
-      >
-      <p class="admin-memory-help">
-        Used by screen readers and shown if the image cannot load.
-      </p>
-    </div>
-
-    <div class="admin-memory-field">
-      <label for="memory-sort-order">Display order</label>
-      <input
-        id="memory-sort-order"
-        name="sort_order"
-        type="number"
-        step="1"
-        value="0"
-      >
-      <p class="admin-memory-help">
-        Smaller numbers appear first within the chosen collection.
-      </p>
-    </div>
-
-    <label class="admin-memory-publish">
-      <input id="memory-published" name="is_published" type="checkbox">
-      <span>
-        <strong>Publish this memory</strong>
-        <small>When checked, the memory can appear in the visitor gallery.</small>
-      </span>
-    </label>
-
-    
-<label class="admin-memory-field admin-memory-field--checkbox">
-  <input
-    type="checkbox"
-    name="is_featured"
-    id="memory-is-featured"
-  >
-  <span>
-    <strong>Featured Memory</strong>
-    <small>
-      Highlight this memory in the All Memories exhibition.
-    </small>
-  </span>
-</label>
-
-
-    <div class="admin-memory-form__actions">
-      <button id="memory-save-button" type="submit">
-        Save memory
-      </button>
-      <button id="memory-clear-button" type="button">
-        Clear form
-      </button>
+      <aside class="admin-post-preview" aria-label="Live preview">
+        <div class="admin-post-preview__top"><span>LIVE PREVIEW</span><span class="admin-post-preview__live-dot"></span></div>
+        <div class="admin-post-preview__card admin-post-preview__card--photo" id="memory-preview-card">
+          <div class="admin-post-preview__media" id="memory-preview-media">
+            <img id="memory-preview-image" alt="" hidden>
+            <div class="admin-post-preview__placeholder" id="memory-preview-placeholder"><span aria-hidden="true">✳</span><small>Your photograph will appear here</small></div>
+          </div>
+          <div class="admin-post-preview__content">
+            <span class="admin-post-preview__type" id="memory-preview-type">PHOTO MEMORY</span>
+            <h3 id="memory-preview-title">A moment worth keeping</h3>
+            <p id="memory-preview-caption">Your caption will appear here.</p>
+            <div id="memory-preview-body" class="admin-post-preview__body">Your longer story can live here, too.</div>
+            <span class="admin-post-preview__date" id="memory-preview-date"></span>
+          </div>
+        </div>
+        <div class="admin-post-preview__note"><span aria-hidden="true">✦</span><p>This is a working preview of your post format. The public museum has its own carefully styled view.</p></div>
+      </aside>
     </div>
   </form>
 
-  <div class="admin-memory-list-heading">
-    <div>
-      <p class="admin-memory-manager__eyebrow">YOUR ARCHIVE</p>
-      <h3>Saved memories</h3>
+  <dialog class="admin-image-editor-dialog" id="memory-image-editor-dialog" aria-labelledby="memory-image-editor-title">
+    <div class="admin-image-editor">
+      <header class="admin-image-editor__header">
+        <div><p class="admin-memory-manager__eyebrow">IMAGE STUDIO</p><h3 id="memory-image-editor-title">Find the frame.</h3><p>Crop the image and fine-tune its light before it enters the archive.</p></div>
+        <button class="admin-image-editor__close" id="memory-image-editor-close" type="button" aria-label="Close image editor">×</button>
+      </header>
+      <div class="admin-image-editor__body">
+        <div class="admin-image-editor__canvas-wrap"><img id="memory-image-editor-source" alt="Image being edited"></div>
+        <div class="admin-image-editor__controls">
+          <label for="memory-image-aspect">Crop shape</label>
+          <select id="memory-image-aspect"><option value="free">Original / free</option><option value="1">Square · 1:1</option><option value="0.8">Portrait · 4:5</option><option value="0.5625">Story · 9:16</option><option value="1.3333333">Landscape · 4:3</option></select>
+          <div class="admin-image-editor__button-grid"><button id="memory-image-rotate-left" type="button">↶ Rotate</button><button id="memory-image-rotate-right" type="button">Rotate ↷</button><button id="memory-image-flip" type="button">⇋ Flip</button><button id="memory-image-reset" type="button">Reset crop</button></div>
+          <div class="admin-image-editor__slider"><label for="memory-image-brightness">Brightness <output id="memory-image-brightness-value">100%</output></label><input id="memory-image-brightness" type="range" min="70" max="130" value="100"></div>
+          <div class="admin-image-editor__slider"><label for="memory-image-contrast">Contrast <output id="memory-image-contrast-value">100%</output></label><input id="memory-image-contrast" type="range" min="70" max="130" value="100"></div>
+          <p class="admin-memory-help" id="memory-image-editor-help">A light touch is usually enough. Your original file isn't changed on your device.</p>
+        </div>
+      </div>
+      <footer class="admin-image-editor__footer"><button id="memory-image-editor-cancel" type="button">Keep original</button><button id="memory-image-editor-apply" type="button">Apply edits <span aria-hidden="true">↗</span></button></footer>
     </div>
-    <button id="memory-refresh-button" type="button" class="admin-memory-secondary">
-      Refresh
-    </button>
-  </div>
+  </dialog>
 
-  <div id="admin-memory-list" class="admin-memory-list">
-    <p>Loading saved memories…</p>
+  <div class="admin-memory-list-heading">
+    <div><p class="admin-memory-manager__eyebrow">YOUR ARCHIVE</p><h3>Saved memories</h3></div>
+    <button id="memory-refresh-button" type="button" class="admin-memory-secondary">Refresh archive</button>
   </div>
-
+  <div id="admin-memory-list" class="admin-memory-list"><p>Loading saved memories…</p></div>
 </section>
-<!-- END PHASE 3C -->
+<!-- END CURATOR'S POST COMPOSER -->
 
 
     </main>

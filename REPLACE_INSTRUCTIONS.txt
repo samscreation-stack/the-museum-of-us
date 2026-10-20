@@ -1,0 +1,34 @@
+THE MUSEUM OF US — ADMIN POST COMPOSER UPDATE
+
+This is a small patch, not a complete website backup.
+
+REPLACE ONLY THESE THREE FILES:
+1. admin.html
+2. css/admin.css
+3. js/admin-memory-editor.js
+
+INSTALL
+1. Make a backup copy of your existing project folder first.
+2. Open your existing the-museum-of-us folder — the one that contains index.html.
+3. Extract this ZIP directly into that folder.
+4. When your computer asks, choose Replace for the three files listed above.
+5. Do not delete or replace any other file. In particular, leave js/museum-gallery.js, js/supabase-client.js, js/access-control.js, and js/page-guard.js unchanged.
+6. Open the site using your normal local server / Live Server, sign in with your curator account, and open Admin.
+
+WHAT CHANGES
+- Make a post -> choose Photo Memory, Letter, Milestone, or Short Note.
+- Letter and Short Note composers do not show photo-upload controls.
+- Photo and Milestone posts include a live image preview, drag/drop, crop ratios, rotate, flip, brightness, and contrast adjustments.
+- Animated GIFs upload unchanged so their animation is not lost.
+- Save as draft and Publish are separate actions.
+- Existing Supabase authentication, role checks, private bucket, signed-URL preview, database fields, featured toggle, collection setting, and saved-memory Edit/Delete actions are retained.
+- Crop tools use Cropper.js 1.6.2 from jsDelivr. If that CDN is blocked, image uploads can still use the original file, but cropping/editing tools will not load.
+
+BEFORE DEPLOYING, TEST
+1. Sign in, click Make a post, and choose Letter. Confirm the image picker is absent; write a letter and save as draft.
+2. Create a Photo Memory. Choose a supported image under 5 MB, try crop/rotate/brightness, apply edits, and verify the preview.
+3. Publish a test photo and confirm it appears in the museum. Confirm a draft remains unpublished.
+4. Edit an existing memory and confirm its image stays intact when no replacement is selected.
+5. Check the page at mobile width and desktop width.
+
+Validation completed on this patch: JavaScript syntax check; HTML parsing; duplicate-ID and local JS-to-HTML element reference checks; CSS parsing. An authenticated browser test against the live Supabase project was not completed here, so perform the tests above before deploying.
